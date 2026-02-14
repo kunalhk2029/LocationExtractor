@@ -1,0 +1,12 @@
+{% extends "reels/base.html" %}
+
+{% block content %}
+  <h1>Upload Reel Video</h1>
+  <p class="muted">For compliance reasons, this app does not download from Instagram directly. Upload a video file you own or have permission to use.</p>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary" type="submit">Upload</button>
+  </form>
+{% endblock %}

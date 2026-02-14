@@ -1,0 +1,21 @@
+{% extends "reels/base.html" %}
+
+{% block content %}
+  <h1>Reel Jobs</h1>
+  <p class="muted">Upload a reel video file to start a location inference job.</p>
+
+  {% if jobs %}
+    {% for job in jobs %}
+      <div class="card">
+        <strong>Job #{{ job.id }}</strong>
+        <div>Status: {{ job.status }}</div>
+        <div>Created: {{ job.created_at }}</div>
+        <div>Result: {{ job.result_city }} {{ job.result_country }}</div>
+        <div class="muted">Source URL: {{ job.source_url|default:"-" }}</div>
+        <a href="{% url 'reels-detail' job_id=job.id %}">View</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No jobs yet.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "reels/base.html" %}
+
+{% block content %}
+  <h1>Job #{{ job.id }}</h1>
+  <div class="card">
+    <div>Status: {{ job.status }}</div>
+    <div>Created: {{ job.created_at }}</div>
+    <div>Updated: {{ job.updated_at }}</div>
+    <div>Source URL: {{ job.source_url|default:"-" }}</div>
+    <div>Video: <a href="{{ job.video_file.url }}">Download</a></div>
+  </div>
+
+  <div class="card">
+    <h3>Result</h3>
+    <div>City: {{ job.result_city|default:"-" }}</div>
+    <div>Country: {{ job.result_country|default:"-" }}</div>
+    <div>Confidence: {{ job.confidence|default:"-" }}</div>
+    <div>Reasoning: {{ job.reasoning|default:"-" }}</div>
+  </div>
+
+  <div class="card">
+    <h3>Transcript</h3>
+    <pre>{{ job.audio_transcript|default:"" }}</pre>
+  </div>
+
+  <div class="card">
+    <h3>Actions</h3>
+    <form method="post" action="{% url 'reels-process' job_id=job.id %}">
+      {% csrf_token %}
+      <button class="btn" type="submit">Process Now</button>
+    </form>
+  </div>
+
+  {% if job.error_message %}
+    <div class="card">
+      <h3>Error</h3>
+      <pre>{{ job.error_message }}</pre>
+    </div>
+  {% endif %}
+{% endblock %}
