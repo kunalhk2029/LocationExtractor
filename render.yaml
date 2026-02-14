@@ -1,10 +1,8 @@
 services:
   - type: web
     name: reel-locator
-    env: python
+    env: docker
     plan: free
-    buildCommand: "mkdir -p /tmp/apt/lists/partial /tmp/apt/cache && apt-get -o Dir::State::lists=/tmp/apt/lists update && apt-get -o Dir::Cache::archives=/tmp/apt/cache install -y ffmpeg && pip install -r requirements.txt && python manage.py collectstatic --noinput"
-    startCommand: "python manage.py migrate && gunicorn reel_locator.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: DJANGO_SECRET_KEY
         generateValue: true

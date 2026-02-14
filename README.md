@@ -50,7 +50,7 @@ python manage.py process_reel <job_id>
 - Location inference is best-effort; if there are no strong cues, it may return empty values.
 
 ## Deploy (Render Free)
-This repo includes a `render.yaml` for a simple free deploy.
+This repo includes a `render.yaml` for a simple free deploy. It uses a Docker build so `ffmpeg` can be installed reliably.
 
 1) Push this repo to GitHub.
 2) Create a new Web Service on Render and pick this repo.
@@ -60,7 +60,7 @@ This repo includes a `render.yaml` for a simple free deploy.
    - `DJANGO_DEBUG=0`
    - `DJANGO_ALLOWED_HOSTS=<your-service>.onrender.com`
    - `DJANGO_SERVE_MEDIA=1` (temporary for free testing)
-4) Deploy. Render runs `collectstatic`, `migrate`, and starts Gunicorn automatically.
+4) Deploy. The Dockerfile runs `collectstatic` at build time and starts Gunicorn + migrations on boot.
 
 Notes:
 - Render free services use **ephemeral disk**. Uploaded videos and the SQLite DB will be lost on redeploy or if the service spins down. For persistence, use a paid disk or move uploads to object storage.
