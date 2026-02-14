@@ -3,7 +3,7 @@ services:
     name: reel-locator
     env: python
     plan: free
-    buildCommand: "apt-get update && apt-get install -y ffmpeg && pip install -r requirements.txt && python manage.py collectstatic --noinput"
+    buildCommand: "mkdir -p /var/lib/apt/lists/partial && apt-get update && apt-get install -y ffmpeg && pip install -r requirements.txt && python manage.py collectstatic --noinput"
     startCommand: "python manage.py migrate && gunicorn reel_locator.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: DJANGO_SECRET_KEY
